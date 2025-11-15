@@ -1,0 +1,76 @@
+import java.util.*;
+import java.sql.*;
+public class Main {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Account ac=new Account();
+		Transaction tc=new Transaction();
+		System.out.print("1.Create account");
+		System.out.print("2.Withdraw");
+		System.out.print("3.Deposit");
+		System.out.print("4.Balance Enquiry");
+		System.out.print("5.Transaction History");
+		int x=sc.nextInt();
+		sc.nextLine();
+		switch(x) {
+		case 1:
+			System.out.print("Enter ur name");
+			String s=sc.nextLine();
+			System.out.print("Enter ur card number");
+			long c=sc.nextLong();
+			sc.nextLine();
+			System.out.print("Enter ur pasword");
+			int p=sc.nextInt();
+			sc.nextLine();
+			ac.createacc(c,s,p);
+			break;
+		case 2:
+			System.out.print("Enter ur card number");
+			long c1=sc.nextLong();
+			sc.nextLine();
+			System.out.print("Enter ur pasword");
+			int p1=sc.nextInt();
+			sc.nextLine();
+			System.out.print("Enter money to withdraw");
+			int m=sc.nextInt();
+			sc.nextLine();
+			ac.withdraw(c1,p1,m);
+			break;
+		case 3:
+			System.out.print("Enter ur card number");
+			long c2=sc.nextLong();
+			sc.nextLine();
+			System.out.print("Enter ur pasword");
+			int p2=sc.nextInt();
+			sc.nextLine();
+			System.out.print("Enter money to deposit");
+			int m1=sc.nextInt();
+			sc.nextLine();
+			ac.deposit(c2,p2,m1);
+			break;
+		case 4:
+			System.out.print("Enter ur card number");
+			long c3=sc.nextLong();
+			sc.nextLine();
+			System.out.print("Enter ur pasword");
+			int p3=sc.nextInt();
+			sc.nextLine();
+			ac.balance(c3, p3);
+			break;
+		case 5:
+			System.out.print("Enter ur card number");
+			long c4=sc.nextLong();
+			sc.nextLine();
+			System.out.print("Enter ur pasword");
+			int p4=sc.nextInt();
+			sc.nextLine();
+			tc.transact(c4, p4);
+			
+			
+		}
+
+	}
+
+}
