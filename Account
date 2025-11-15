@@ -1,0 +1,64 @@
+import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class Account {
+    Connection con;
+    Transaction t=new Transaction();
+    public Account() throws Exception{
+    	con = DBConnection.getConnection();
+    	
+    }
+    public void createacc(long card_num,String name,int password ) throws Exception {
+        String sql = "INSERT INTO accounts(card_num, name, balance, password) VALUES (?, ?, 0, ?)";
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setLong(1, card_num);
+        stmt.setString(2,name);
+        stmt.setInt(3,password);
+        stmt.executeUpdate();
+        System.out.println("Account created successfully");
+    }public void withdraw(long card_num,int password,int money) throws Exception{
+    	String sql="Select balance from accounts where card_num=? and password=?";
+    	PreparedStatement stmt = con.prepareStatement(sql);
+    	stmt.setLong(1,card_num);
+    	stmt.setInt(2,password);
+    	ResultSet rs=stmt.executeQuery();
+    	while(rs.next()) {
+    		int b=rs.getInt("balance");
+    		if(b>=money) {
+    			String ssql="Update accounts set balance=balance-? where card_num=? and password=?";
+    			PreparedStatement stm=con.prepareStatement(ssql);
+    			stm.setInt(1, money);
+    			stm.setLong(2,card_num);
+    			stm.setInt(3, password);
+    			stm.executeUpdate();
+    			System.out.print("Ur current balance is"+b-money);
+    			t.wittransact(card_num, money);
+    		}else {
+    			System.out.print("Insufficient money");
+    		}
+    		
+    	}
+    }
+    public void deposit(long card_num,int password,int money) throws Exception{
+    	String sql="Update accounts set balance=balance+? where card_num=? and password=?";
+    	PreparedStatement stmt = con.prepareStatement(sql);
+    	stmt.setInt(1, money);
+    	stmt.setLong(2,card_num);
+    	stmt.setInt(3,password);
+    	stmt.executeUpdate();
+    	System.out.print("Money Deposited");
+    	t.deptransact(card_num, money);
+    }
+    public void balance(long card_num,int password) throws Exception{
+    	String sql="Select balance from accounts where card_num=? and password=?";
+    	PreparedStatement stmt = con.prepareStatement(sql);
+    	stmt.setLong(1,card_num);
+    	stmt.setInt(2,password);
+    	ResultSet rs=stmt.executeQuery();
+    	while(rs.next()) {
+    		int b=rs.getInt("balance");
+    		System.out.print("Your balance is"+b);
+    	}
+    }
+}
