@@ -1,0 +1,11 @@
+
+import java.sql.*;
+
+class DBConnection {
+    public static Connection getConnection() throws Exception {
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";       // your MySQL user
+        String pass = "thanosvandi5324";   // your MySQL password
+        return DriverManager.getConnection(url, user, pass);
+    }
+}
